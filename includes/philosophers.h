@@ -6,7 +6,7 @@
 /*   By: scrumier <scrumier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/25 17:29:19 by scrumier          #+#    #+#             */
-/*   Updated: 2024/04/29 18:13:43 by scrumier         ###   ########.fr       */
+/*   Updated: 2024/05/15 15:17:06 by scrumier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,8 @@ void	*monitor_handler(void *arg);
 void	*one_philo(void *arg);
 void	dinner(t_table *table);
 void	wait_thread(t_table *table);
-bool	all_threads_running(t_mtx *philo,t_mtx *mtx, long *threads, long philo_nbr);
+bool	all_threads_running(t_mtx *philo, t_mtx *mtx, \
+		long *threads, long philo_nbr);
 void	de_synchro(t_philo *philo);
 int		ft_strlen(char *str);
 long	ft_atol(char *str);

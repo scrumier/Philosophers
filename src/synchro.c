@@ -6,7 +6,7 @@
 /*   By: scrumier <scrumier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 13:27:32 by sonamcrumie       #+#    #+#             */
-/*   Updated: 2024/04/29 17:19:34 by scrumier         ###   ########.fr       */
+/*   Updated: 2024/05/15 15:22:11 by scrumier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,8 @@ void	wait_thread(t_table *table)
 		ft_usleep(2, table);
 }
 
-bool	all_threads_running(t_mtx *philo,t_mtx *mtx, long *threads, long philo_nbr)
+bool	all_threads_running(t_mtx *philo, t_mtx *mtx, \
+		long *threads, long philo_nbr)
 {
 	bool	var;
 
@@ -34,14 +35,6 @@ bool	all_threads_running(t_mtx *philo,t_mtx *mtx, long *threads, long philo_nbr)
 
 void	de_synchro(t_philo *philo)
 {
-	if (philo->table->philo_nbr % 2 == 0)
-	{
-		if (philo->id % 2 == 0)
-			ft_usleep(3e4, philo->table);
-	}
-	else
-	{
-		if (philo->id % 2)
-			write_message(philo, "is thinking");
-	}
+	if (philo->id % 2 == 0)
+		ft_usleep(philo->table->time_to_eat * 0.5, philo->table);
 }

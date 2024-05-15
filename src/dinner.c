@@ -6,37 +6,44 @@
 /*   By: scrumier <scrumier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 14:03:23 by sonamcrumie       #+#    #+#             */
-/*   Updated: 2024/04/30 14:53:32 by scrumier         ###   ########.fr       */
+/*   Updated: 2024/05/15 15:30:01 by scrumier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
-static void can_i_take_fork(t_philo *philo)
+static void	release_forks(t_philo *philo)
+{
+	if (get_bool(&philo->first_fork->fork, &philo->first_fork->taken))
+	{
+		pthread_mutex_unlock(&philo->first_fork->fork);
+		set_bool(&philo->first_fork->fork, &philo->first_fork->taken, false);
+	}
+	if (get_bool(&philo->second_fork->fork, &philo->second_fork->taken))
+	{
+		pthread_mutex_unlock(&philo->second_fork->fork);
+		set_bool(&philo->second_fork->fork, &philo->second_fork->taken, false);
+	}
+}
+
+static void	can_i_take_fork(t_philo *philo)
 {
 	while (!eat_finished(philo->table))
 	{
 		if (!get_bool(&philo->first_fork->fork, &philo->first_fork->taken) && \
-				!get_bool(&philo->second_fork->fork, &philo->second_fork->taken))
+			!get_bool(&philo->second_fork->fork, &philo->second_fork->taken))
 		{
-			set_bool(&philo->first_fork->fork, &philo->first_fork->taken, true);
+			set_bool(&philo->first_fork->fork, \
+					&philo->first_fork->taken, true);
 			pthread_mutex_lock(&philo->first_fork->fork);
-			set_bool(&philo->second_fork->fork, &philo->second_fork->taken, true);
+			set_bool(&philo->second_fork->fork, \
+					&philo->second_fork->taken, true);
 			pthread_mutex_lock(&philo->second_fork->fork);
 			break ;
 		}
 		else
 		{
-			if (get_bool(&philo->first_fork->fork, &philo->first_fork->taken))
-			{
-				pthread_mutex_unlock(&philo->first_fork->fork);
-				set_bool(&philo->first_fork->fork, &philo->first_fork->taken, false);
-			}
-			if (get_bool(&philo->second_fork->fork, &philo->second_fork->taken))
-			{
-				pthread_mutex_unlock(&philo->second_fork->fork);
-				set_bool(&philo->second_fork->fork, &philo->second_fork->taken, false);
-			}
+			release_forks(philo);
 		}
 		usleep(100);
 	}
@@ -44,8 +51,8 @@ static void can_i_take_fork(t_philo *philo)
 
 static void	eat(t_philo *philo, long time_to_eat)
 {
-	struct timeval now;
-	long now_milli;
+	struct timeval	now;
+	long			now_milli;
 
 	can_i_take_fork(philo);
 	write_message(philo, "has taken a fork");
@@ -66,21 +73,19 @@ static void	eat(t_philo *philo, long time_to_eat)
 
 static void	*routine(void *data)
 {
-	t_philo	*philo;
-	long	sleep_time;
-	long	eat_time;
-	struct	timeval now;
-	long	now_milli;
+	t_philo			*philo;
+	long			sleep_time;
+	long			eat_time;
+	struct timeval	now;
+	long			now_milli;
 
 	philo = (t_philo *)data;
 	eat_time = philo->table->time_to_eat;
 	sleep_time = philo->table->time_to_sleep;
 	wait_thread(philo->table);
-
 	gettimeofday(&now, NULL);
-	now_milli = now.tv_sec * 1e3 + now.tv_usec *0.001;
+	now_milli = now.tv_sec * 1e3 + now.tv_usec * 0.001;
 	set_long(&philo->philo_mtx, &philo->last_ate, now_milli);
-
 	increase_long(&philo->table->table_mtx, &philo->table->threads_running, 1);
 	de_synchro(philo);
 	while (!eat_finished(philo->table))
@@ -89,7 +94,6 @@ static void	*routine(void *data)
 		write_message(philo, "is sleeping");
 		ft_usleep(sleep_time, philo->table);
 		write_message(philo, "is thinking");
-		//ft_usleep(100, philo->table);
 	}
 	return (NULL);
 }

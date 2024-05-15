@@ -6,7 +6,7 @@
 /*   By: scrumier <scrumier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 14:13:44 by sonamcrumie       #+#    #+#             */
-/*   Updated: 2024/04/30 13:48:26 by scrumier         ###   ########.fr       */
+/*   Updated: 2024/05/15 15:21:28 by scrumier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,12 @@ static bool	philo_die(t_philo *philo, long time_to_die)
 		return (false);
 	time = gettime(MILLISECONDS) - \
 		get_long(&philo->philo_mtx, &philo->last_ate);
-	if (time > time_to_die *0.001)
+	if (time > time_to_die * 0.001)
 		return (true);
 	return (false);
 }
 
-static bool all_full(t_table *table)
+static bool	all_full(t_table *table)
 {
 	int	i;
 
@@ -37,6 +37,18 @@ static bool all_full(t_table *table)
 		i++;
 	}
 	return (true);
+}
+
+static void	check_philo_death(t_table *table, int i, long time_to_die)
+{
+	if (philo_die(table->philos + i, time_to_die) && !eat_finished(table))
+	{
+		set_bool(&table->table_mtx, &table->end_eat, true);
+		pthread_mutex_lock(&table->write_mtx);
+		printf("%ld %d died\n", gettime(MILLISECONDS) - \
+			table->start, table->philos[i].id);
+		pthread_mutex_unlock(&table->write_mtx);
+	}
 }
 
 void	*monitor_handler(void *arg)
@@ -55,21 +67,14 @@ void	*monitor_handler(void *arg)
 		i = 0;
 		while (i < table->philo_nbr)
 		{
-			if (philo_die(table->philos + i, time_to_die) && !eat_finished(table))
-			{
-				set_bool(&table->table_mtx, &table->end_eat, true);
-				pthread_mutex_lock(&table->write_mtx);
-				printf("%ld %d died\n", gettime(MILLISECONDS) - \
-					table->start, table->philos[i].id);
-				pthread_mutex_unlock(&table->write_mtx);
-			}
+			check_philo_death(table, i, time_to_die);
 			i++;
 		}
-			if (table->nb_eat > 0 && all_full(table))
-			{
-				set_bool(&table->table_mtx, &table->end_eat, true);
-				break ;
-			}
+		if (table->nb_eat > 0 && all_full(table))
+		{
+			set_bool(&table->table_mtx, &table->end_eat, true);
+			break ;
+		}
 	}
 	return (NULL);
 }

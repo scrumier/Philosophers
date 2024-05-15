@@ -6,7 +6,7 @@
 #    By: scrumier <scrumier@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/21 15:05:40 by scrumier          #+#    #+#              #
-#    Updated: 2024/04/29 16:36:16 by scrumier         ###   ########.fr        #
+#    Updated: 2024/05/15 15:26:06 by scrumier         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,6 +24,7 @@ SRC     = $(addprefix $(SRC_DIR)/, \
 			philosophers.c \
 			set.c \
 			synchro.c \
+			ft_usleep.c \
 			utils.c)
 OBJ_DIR = .philo_obj
 OBJ     = $(SRC:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)

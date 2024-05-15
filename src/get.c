@@ -6,7 +6,7 @@
 /*   By: scrumier <scrumier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 13:52:52 by sonamcrumie       #+#    #+#             */
-/*   Updated: 2024/04/29 18:12:57 by scrumier         ###   ########.fr       */
+/*   Updated: 2024/05/15 15:17:34 by scrumier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ int	get_int(t_mtx *mtx, int *var)
 	return (value);
 }
 
-bool	eat_finished(t_table *table)
+inline bool	eat_finished(t_table *table)
 {
 	return (get_bool(&table->table_mtx, &table->end_eat));
 }
