@@ -6,13 +6,13 @@
 #    By: scrumier <scrumier@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/21 15:05:40 by scrumier          #+#    #+#              #
-#    Updated: 2024/05/15 15:26:06 by scrumier         ###   ########.fr        #
+#    Updated: 2024/05/15 18:10:04 by scrumier         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME    = philo
-SRC_DIR = src
-SRC     = $(addprefix $(SRC_DIR)/, \
+NAME	= philo
+SRC_DIR	= src
+SRC	= $(addprefix $(SRC_DIR)/, \
 			check_args.c \
 			dinner.c \
 			error_handler.c \
@@ -26,11 +26,11 @@ SRC     = $(addprefix $(SRC_DIR)/, \
 			synchro.c \
 			ft_usleep.c \
 			utils.c)
-OBJ_DIR = .philo_obj
-OBJ     = $(SRC:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
-CC      = cc
-FLAGS   = -Wall -Wextra -Werror -O3 -Iincludes
-RM      = rm -rf
+OBJ_DIR	= .philo_obj
+OBJ		= $(SRC:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
+CC		= cc
+FLAGS	= -Wall -Wextra -Werror -O3 -Iincludes
+RM		= rm -rf
 
 all: $(NAME)
 

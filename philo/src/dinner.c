@@ -6,46 +6,40 @@
 /*   By: scrumier <scrumier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 14:03:23 by sonamcrumie       #+#    #+#             */
-/*   Updated: 2024/05/15 15:30:01 by scrumier         ###   ########.fr       */
+/*   Updated: 2024/05/15 18:11:25 by scrumier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
-static void	release_forks(t_philo *philo)
+static bool take_fork(t_mtx *mtx, bool *taken)
 {
-	if (get_bool(&philo->first_fork->fork, &philo->first_fork->taken))
+	bool	ret;
+
+	ret = 0;
+	pthread_mutex_lock(mtx);
+	if (!*taken)
 	{
-		pthread_mutex_unlock(&philo->first_fork->fork);
-		set_bool(&philo->first_fork->fork, &philo->first_fork->taken, false);
+		ret = 1;
+		*taken = 1;
 	}
-	if (get_bool(&philo->second_fork->fork, &philo->second_fork->taken))
-	{
-		pthread_mutex_unlock(&philo->second_fork->fork);
-		set_bool(&philo->second_fork->fork, &philo->second_fork->taken, false);
-	}
+	pthread_mutex_unlock(mtx);
+	return ret;
 }
 
 static void	can_i_take_fork(t_philo *philo)
 {
+	int left = 0;
+	int right = 0;
 	while (!eat_finished(philo->table))
 	{
-		if (!get_bool(&philo->first_fork->fork, &philo->first_fork->taken) && \
-			!get_bool(&philo->second_fork->fork, &philo->second_fork->taken))
-		{
-			set_bool(&philo->first_fork->fork, \
-					&philo->first_fork->taken, true);
-			pthread_mutex_lock(&philo->first_fork->fork);
-			set_bool(&philo->second_fork->fork, \
-					&philo->second_fork->taken, true);
-			pthread_mutex_lock(&philo->second_fork->fork);
-			break ;
-		}
-		else
-		{
-			release_forks(philo);
-		}
-		usleep(100);
+		if (!left)
+			left = take_fork(&philo->first_fork->fork, &philo->first_fork->taken);
+		if (!right)
+			right = take_fork(&philo->second_fork->fork, &philo->second_fork->taken);
+		if (left && right)
+			break;
+		usleep(50);
 	}
 }
 
@@ -65,11 +59,11 @@ static void	eat(t_philo *philo, long time_to_eat)
 	ft_usleep(time_to_eat, philo->table);
 	if (philo->table->nb_eat > 0 && philo->time_eaten == philo->table->nb_eat)
 		set_bool(&philo->philo_mtx, &philo->full, true);
-	pthread_mutex_unlock(&philo->first_fork->fork);
-	pthread_mutex_unlock(&philo->second_fork->fork);
-	set_bool(&philo->first_fork->fork, &philo->first_fork->taken, false);
-	set_bool(&philo->second_fork->fork, &philo->second_fork->taken, false);
+	set_bool(&philo->first_fork->fork, &philo->first_fork->taken, 0);
+	set_bool(&philo->second_fork->fork, &philo->second_fork->taken, 0);
 }
+
+#include <unistd.h>
 
 static void	*routine(void *data)
 {
@@ -93,6 +87,7 @@ static void	*routine(void *data)
 		eat(philo, eat_time);
 		write_message(philo, "is sleeping");
 		ft_usleep(sleep_time, philo->table);
+		usleep(50);
 		write_message(philo, "is thinking");
 	}
 	return (NULL);
