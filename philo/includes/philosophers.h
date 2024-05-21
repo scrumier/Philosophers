@@ -6,7 +6,7 @@
 /*   By: scrumier <scrumier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/25 17:29:19 by scrumier          #+#    #+#             */
-/*   Updated: 2024/05/15 15:17:06 by scrumier         ###   ########.fr       */
+/*   Updated: 2024/05/21 14:34:52 by scrumier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@
 # define BAD_NBR_PHILO "Philo must be bettwin 1 and 200.\n"
 # define BAD_AC "The number of arguments is incorrect.\n"
 # define BAD_AV "The time to do the task must be a positive integer.\n"
-# define BAD_NBR_EAT "Philosophers cant that fast !\n"
+# define BAD_NBR_EAT "Philosophers can't that fast !\n"
 # define FAIL_INIT_STRUCT "Failed to init the struct.\n"
 # define FAIL_MALLOC "Failed to malloc.\n"
 # define FAIL_MUTEX_INIT "Failed to init mutex.\n"

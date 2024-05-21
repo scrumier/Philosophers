@@ -6,7 +6,7 @@
 /*   By: scrumier <scrumier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 16:49:18 by scrumier          #+#    #+#             */
-/*   Updated: 2024/04/29 16:37:22 by scrumier         ###   ########.fr       */
+/*   Updated: 2024/05/21 14:35:15 by scrumier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,6 @@ int	ft_check_args(int ac, char **av)
 		if (ft_isnbr(av[i]) == 1)
 			return (ft_failure(BAD_AV));
 		if (ft_strlen(av[i]) > 10)
-			return (ft_failure(BAD_AV));
-		if (ft_atol(av[i]) > 2147483647 || ft_atol(av[i]) < 0)
 			return (ft_failure(BAD_AV));
 		i++;
 	}

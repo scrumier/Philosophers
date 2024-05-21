@@ -6,7 +6,7 @@
 /*   By: scrumier <scrumier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 13:56:13 by sonamcrumie       #+#    #+#             */
-/*   Updated: 2024/04/29 16:36:51 by scrumier         ###   ########.fr       */
+/*   Updated: 2024/05/21 14:55:52 by scrumier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,9 @@ void	*one_philo(void *arg)
 		philo->table->start);
 	increase_long(&philo->table->table_mtx, &philo->table->threads_running, 1);
 	write_message(philo, "take a fork");
-	while (!eat_finished(philo->table))
-		ft_usleep(2, philo->table);
+	ft_usleep(philo->table->time_to_die, philo->table);
+	printf("%ld %d %s\n", philo->table->time_to_die / 1000, \
+			get_int(&philo->philo_mtx, &philo->id), "died");
+	set_bool(&philo->table->table_mtx, &philo->table->end_eat, true);
 	return (NULL);
 }

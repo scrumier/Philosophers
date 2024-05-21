@@ -6,7 +6,7 @@
 /*   By: scrumier <scrumier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 14:03:23 by sonamcrumie       #+#    #+#             */
-/*   Updated: 2024/05/21 11:18:12 by scrumier         ###   ########.fr       */
+/*   Updated: 2024/05/21 14:38:58 by scrumier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ static void	can_i_take_fork(t_philo *philo)
 					&philo->second_fork->taken);
 		if (left && right)
 			break ;
-		usleep(50);
+		usleep(10);
 	}
 }
 
@@ -90,7 +90,6 @@ static void	*routine(void *data)
 		eat(philo, eat_time);
 		write_message(philo, "is sleeping");
 		ft_usleep(sleep_time, philo->table);
-		usleep(50);
 		write_message(philo, "is thinking");
 	}
 	return (NULL);
@@ -101,6 +100,7 @@ void	dinner(t_table *table)
 	int	i;
 
 	i = -1;
+	table->start = gettime(MILLISECONDS);
 	if (table->nb_eat == 0)
 		return ;
 	else if (table->philo_nbr == 1)
@@ -115,7 +115,6 @@ void	dinner(t_table *table)
 				NULL, routine, &table->philos[i]);
 	}
 	pthread_create(&table->monitor, NULL, monitor_handler, table);
-	table->start = gettime(MILLISECONDS);
 	i = -1;
 	set_bool(&table->table_mtx, &table->thread_ready, true);
 	while (++i < table->philo_nbr)
