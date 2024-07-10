@@ -6,7 +6,7 @@
 /*   By: scrumier <scrumier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/25 17:53:13 by scrumier          #+#    #+#             */
-/*   Updated: 2024/05/21 14:46:04 by scrumier         ###   ########.fr       */
+/*   Updated: 2024/07/10 05:43:16 by scrumier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,3 +65,4 @@ void	clean(t_table *table)
 	free(table->forks);
 	free(table->philos);
 }
+// TODO check that

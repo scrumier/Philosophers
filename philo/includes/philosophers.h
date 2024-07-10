@@ -24,7 +24,7 @@
 
 # define USAGE "./philo <nbr_philo> <time_to_die> <time_to_eat> \
 				<time_to_sleep> [number_of_times_each_philosopher_must_eat]\n"
-# define BAD_NBR_PHILO "Philo must be bettwin 1 and 200.\n"
+# define BAD_NBR_PHILO "Philo must be between 1 and 200.\n"
 # define BAD_AC "The number of arguments is incorrect.\n"
 # define BAD_AV "The time to do the task must be a positive integer.\n"
 # define BAD_NBR_EAT "Philosophers can't that fast !\n"
