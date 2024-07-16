@@ -6,7 +6,7 @@
 /*   By: scrumier <scrumier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/25 17:53:13 by scrumier          #+#    #+#             */
-/*   Updated: 2024/07/10 05:43:16 by scrumier         ###   ########.fr       */
+/*   Updated: 2024/07/16 16:58:16 by scrumier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,13 +56,19 @@ void	clean(t_table *table)
 	i = 0;
 	while (i < table->philo_nbr)
 	{
-		pthread_mutex_destroy(&table->forks[i].fork);
-		pthread_mutex_destroy(&table->philos[i].philo_mtx);
+		if (&table->forks[i].fork)
+			pthread_mutex_destroy(&table->forks[i].fork);
+		if (&table->philos[i].philo_mtx)
+			pthread_mutex_destroy(&table->philos[i].philo_mtx);
 		i++;
 	}
-	pthread_mutex_destroy(&table->write_mtx);
-	pthread_mutex_destroy(&table->table_mtx);
-	free(table->forks);
-	free(table->philos);
+	if (&table->write_mtx)
+		pthread_mutex_destroy(&table->write_mtx);
+	if (&table->table_mtx)
+		pthread_mutex_destroy(&table->table_mtx);
+	if (table->forks)
+		free(table->forks);
+	if (table->philos)
+		free(table->philos);
 }
 // TODO check that

@@ -6,7 +6,7 @@
 #    By: scrumier <scrumier@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/21 15:05:40 by scrumier          #+#    #+#              #
-#    Updated: 2024/05/21 14:54:53 by scrumier         ###   ########.fr        #
+#    Updated: 2024/07/16 16:55:37 by scrumier         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,7 +21,7 @@ SRC	= $(addprefix $(SRC_DIR)/, \
 			message.c \
 			monitor.c \
 			one_philo.c \
-			philosophers.c \
+			main.c \
 			set.c \
 			synchro.c \
 			ft_usleep.c \

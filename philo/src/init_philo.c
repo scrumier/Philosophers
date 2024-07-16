@@ -6,7 +6,7 @@
 /*   By: scrumier <scrumier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 17:38:07 by scrumier          #+#    #+#             */
-/*   Updated: 2024/07/10 05:42:51 by scrumier         ###   ########.fr       */
+/*   Updated: 2024/07/16 16:56:30 by scrumier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ int	data_init(t_table *table)
 	pthread_mutex_init(&table->write_mtx, NULL);
 	pthread_mutex_init(&table->table_mtx, NULL);
 	if (!table->forks || !table->philos)
-		return (clean(table), ft_failure(FAIL_MALLOC));
+		return (ft_failure(FAIL_MALLOC));
 	while (i < table->philo_nbr)
 	{
 		if (pthread_mutex_init(&table->forks[i].fork, NULL) != 0)
