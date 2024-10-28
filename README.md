@@ -51,9 +51,6 @@ This command starts the simulation with 5 philosophers who must eat within 800ms
 ## Contributing
 Feel free to open issues or submit pull requests for improvements or bug fixes.
 
-## License
-This project is open source. See the [LICENSE](LICENSE) file for details.
-
 ---
 
 Happy coding and dining! 🍜
